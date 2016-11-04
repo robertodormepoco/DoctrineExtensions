@@ -17,7 +17,7 @@ class NullIf extends FunctionNode
     {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
-        $this->expr1 = $parser->ArithmeticExpression();
+        $this->expr1 = $parser->ConditionalExpression();
         $parser->match(Lexer::T_COMMA);
         $this->expr2 = $parser->ArithmeticExpression();
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
@@ -27,7 +27,7 @@ class NullIf extends FunctionNode
     {
         return sprintf(
                 'NULLIF(%s, %s)',
-                $sqlWalker->walkArithmeticPrimary($this->expr1),
+            	.$sqlWalker->walkConditionalExpression($this->expr1). ', '
                 $sqlWalker->walkArithmeticPrimary($this->expr2));
     }
 }

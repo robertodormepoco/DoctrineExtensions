@@ -3,7 +3,8 @@
 namespace DoctrineExtensions\Query\Mysql;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode,
-    Doctrine\ORM\Query\Lexer;
+    Doctrine\ORM\Query\Lexer,
+	Doctrine\ORM\Query\QueryException;
 
 /**
  * @author Andrew Mackrodt <andrew@ajmm.org>
@@ -17,7 +18,15 @@ class IfNull extends FunctionNode
     {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
-        $this->expr1 = $parser->ArithmeticExpression();
+
+        $lexer = $parser->getLexer();
+
+        if($lexer->glimpse()['type'] == Lexer::T_CLOSE_PARENTHESIS) {
+            $this->expr1 = $parser->ArithmeticExpression();
+        } else {
+            $this->expr1 = $parser->ConditionalExpression();
+        }
+
         $parser->match(Lexer::T_COMMA);
         $this->expr2 = $parser->ArithmeticExpression();
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);

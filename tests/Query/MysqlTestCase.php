@@ -56,7 +56,9 @@ class MysqlTestCase extends \PHPUnit_Framework_TestCase
             'RPAD'              => 'DoctrineExtensions\Query\Mysql\Rpad',
             'SOUNDEX'           => 'DoctrineExtensions\Query\Mysql\Soundex',
             'STR_TO_DATE'       => 'DoctrineExtensions\Query\Mysql\StrToDate',
-            'SUBSTRING_INDEX'   => 'DoctrineExtensions\Query\Mysql\SubstringIndex'
+            'SUBSTRING_INDEX'   => 'DoctrineExtensions\Query\Mysql\SubstringIndex',
+            'IFNULL'            => 'DoctrineExtensions\Query\Mysql\IfNull',
+            'NULLIF'            => 'DoctrineExtensions\Query\Mysql\NullIf'
         ));
 
         $this->entityManager = \Doctrine\ORM\EntityManager::create(
